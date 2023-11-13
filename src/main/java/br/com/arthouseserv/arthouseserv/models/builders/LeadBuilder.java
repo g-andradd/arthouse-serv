@@ -35,8 +35,13 @@ public class LeadBuilder {
         return this;
     }
 
-    public LeadBuilder comContato(List<Contato> contatos) {
+    public LeadBuilder comContatos(List<Contato> contatos) {
         this.contatos = contatos;
+        return this;
+    }
+
+    public LeadBuilder comContato(Contato contato) {
+        this.contatos.add(contato);
         return this;
     }
 

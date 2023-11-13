@@ -1,6 +1,7 @@
 package br.com.arthouseserv.arthouseserv.controller;
 
 import br.com.arthouseserv.arthouseserv.dto.LeadDTO;
+import br.com.arthouseserv.arthouseserv.form.LeadDescontoForm;
 import br.com.arthouseserv.arthouseserv.services.LeadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/leads")
+@CrossOrigin
 public class LeadController {
 
     private final LeadService leadService;
@@ -33,8 +35,8 @@ public class LeadController {
     }
 
     @PostMapping
-    public ResponseEntity<LeadDTO> createLead(@RequestBody LeadDTO leadDTO) {
-        LeadDTO createdLead = leadService.createLead(leadDTO);
+    public ResponseEntity<LeadDTO> createLead(@RequestBody LeadDescontoForm leadDescontoForm) {
+        LeadDTO createdLead = leadService.createLead(leadDescontoForm);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdLead);
     }
 

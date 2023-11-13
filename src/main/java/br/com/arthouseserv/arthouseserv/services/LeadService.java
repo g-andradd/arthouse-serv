@@ -1,5 +1,6 @@
 package br.com.arthouseserv.arthouseserv.services;
 
+import br.com.arthouseserv.arthouseserv.form.LeadDescontoForm;
 import br.com.arthouseserv.arthouseserv.mappers.LeadMapper;
 import br.com.arthouseserv.arthouseserv.models.Contato;
 import br.com.arthouseserv.arthouseserv.models.Lead;
@@ -39,9 +40,8 @@ public class LeadService {
     }
 
     @Transactional
-    public LeadDTO createLead(LeadDTO leadDTO) {
-        Lead lead = leadMapper.toEntity(leadDTO);
-        lead.setDataHoraCriacao(LocalDateTime.now());
+    public LeadDTO createLead(LeadDescontoForm leadDescontoForm) {
+        Lead lead = leadMapper.descontoFormToEntity(leadDescontoForm);
         return leadMapper.toDTO(leadRepository.save(lead));
     }
 

@@ -18,6 +18,8 @@ public class Contato {
 
     @Column(length=13)
     private String celular;
+
+    @Column(nullable = false)
     private LocalDateTime dataHoraCriacao;
     private LocalDateTime dataHoraAlteracao;
 

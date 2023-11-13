@@ -17,6 +17,8 @@ public class Lead {
 
     @Column(length=150)
     private String nome;
+
+    @Column(nullable = false)
     private LocalDateTime dataHoraCriacao;
     private LocalDateTime dataHoraAlteracao;
 

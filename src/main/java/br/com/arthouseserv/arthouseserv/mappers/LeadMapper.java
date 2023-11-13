@@ -1,16 +1,21 @@
 package br.com.arthouseserv.arthouseserv.mappers;
 
 import br.com.arthouseserv.arthouseserv.dto.ContatoDTO;
+import br.com.arthouseserv.arthouseserv.form.LeadDescontoForm;
 import br.com.arthouseserv.arthouseserv.models.Contato;
 import br.com.arthouseserv.arthouseserv.models.Lead;
 import br.com.arthouseserv.arthouseserv.dto.LeadDTO;
+import br.com.arthouseserv.arthouseserv.models.builders.ContatoBuilder;
 import br.com.arthouseserv.arthouseserv.models.builders.LeadBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 @Component
@@ -41,7 +46,7 @@ public class LeadMapper {
                 .comNome(leadDTO.nome())
                 .comDataHoraCriacao(leadDTO.dataHoraCriacao())
                 .comDataHoraAlteracao(leadDTO.dataHoraAlteracao())
-                .comContato(mapContatosDTOToEntities(leadDTO.contatos()))
+                .comContatos(mapContatosDTOToEntities(leadDTO.contatos()))
                 .build();
     }
 
@@ -63,5 +68,19 @@ public class LeadMapper {
         } else {
             return Collections.emptyList();
         }
+    }
+
+    public Lead descontoFormToEntity(LeadDescontoForm leadDescontoForm) {
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT-03:00"));
+        Contato contato = new ContatoBuilder()
+                .comEmail(leadDescontoForm.getEmail())
+                .comCelular(leadDescontoForm.getCelular())
+                .comDataHoraCriacao(LocalDateTime.now())
+                .build();
+
+        return new LeadBuilder()
+                .comContato(contato)
+                .comDataHoraCriacao(LocalDateTime.now())
+                .build();
     }
 }
