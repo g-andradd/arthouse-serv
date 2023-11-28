@@ -6,13 +6,13 @@ import java.time.LocalDateTime;
 
 public class ContatoBuilder {
 
-    private Long id;
+    private Integer id;
     private String email;
     private String celular;
     private LocalDateTime dataHoraAlteracao;
     private LocalDateTime dataHoraCriacao;
 
-    public ContatoBuilder comId(Long id) {
+    public ContatoBuilder comId(Integer id) {
         this.id = id;
         return this;
     }
@@ -39,11 +39,11 @@ public class ContatoBuilder {
 
     public Contato build() {
         Contato contato = new Contato();
-        contato.setId(this.id);
-        contato.setEmail(this.email);
-        contato.setCelular(this.celular);
-        contato.setDataHoraAlteracao(this.dataHoraAlteracao);
-        contato.setDataHoraCriacao(this.dataHoraCriacao);
+        contato.setIdContatoLead(this.id);
+        contato.setEmailLead(this.email);
+        contato.setCelularLead(this.celular);
+        contato.setDataAlteracao(this.dataHoraAlteracao);
+        contato.setDataCriacao(this.dataHoraCriacao);
         return contato;
     }
 

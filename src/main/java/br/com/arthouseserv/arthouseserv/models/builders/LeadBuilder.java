@@ -9,14 +9,14 @@ import java.util.List;
 
 public class LeadBuilder {
 
-    private Long  id;
+    private Integer  id;
     private String nome;
 
     private LocalDateTime dataHoraCriacao;
     private LocalDateTime dataHoraAlteracao;
     private List<Contato> contatos = new ArrayList<>();
 
-    public LeadBuilder comId(Long id) {
+    public LeadBuilder comId(Integer id) {
         this.id = id;
         return this;
     }
@@ -47,10 +47,10 @@ public class LeadBuilder {
 
     public Lead build() {
         Lead lead = new Lead();
-        lead.setId(this.id);
-        lead.setNome(this.nome);
-        lead.setDataHoraCriacao(this.dataHoraCriacao);
-        lead.setDataHoraAlteracao(this.dataHoraAlteracao);
+        lead.setIdLead(this.id);
+        lead.setNomeLead(this.nome);
+        lead.setDataCriacao(this.dataHoraCriacao);
+        lead.setDataAlteracao(this.dataHoraAlteracao);
         lead.setContatos(this.contatos);
         return lead;
     }

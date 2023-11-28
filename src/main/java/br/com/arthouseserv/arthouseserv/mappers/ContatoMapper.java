@@ -10,11 +10,11 @@ public class ContatoMapper {
 
     public ContatoDTO toDTO(Contato contato) {
         return new ContatoDTO(
-                contato.getId(),
-                contato.getEmail(),
-                contato.getCelular(),
-                contato.getDataHoraCriacao(),
-                contato.getDataHoraAlteracao()
+                contato.getIdContatoLead(),
+                contato.getEmailLead(),
+                contato.getCelularLead(),
+                contato.getDataCriacao(),
+                contato.getDataAlteracao()
         );
     }
 

@@ -1,0 +1,9 @@
+
+spring:
+  config:
+    activate:
+      on-profile: andrade
+---
+spring:
+  profiles:
+    active: mineiro

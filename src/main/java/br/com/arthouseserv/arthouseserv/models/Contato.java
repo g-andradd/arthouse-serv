@@ -1,68 +1,68 @@
 package br.com.arthouseserv.arthouseserv.models;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "contatos")
-public class Contato {
+@Table(name = "contato_cliente_lead")
+public class Contato extends  DefaultCriacao{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(length=10)
-    private Long id;
+    @Column(name = "ID_CONTATO_CLIENTE_LEAD")
+    private Integer idContatoLead;
 
-    @Column(length=150)
-    private String email;
+    @Column(name = "EMAIL_CLIENTE_LEAD")
+    private String emailLead;
 
-    @Column(length=13)
-    private String celular;
+    @Column(name = "CELULAR_CLIENTE_LEAD")
+    private String celularLead;
 
-    @Column(nullable = false)
-    private LocalDateTime dataHoraCriacao;
-    private LocalDateTime dataHoraAlteracao;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_CLIENTE_LEAD")
+    private Lead lead;
 
     public Contato () {
     }
 
-    public Long getId() {
-        return id;
+    public Contato(Integer idContatoLead, String emailLead, String celularLead, Lead lead) {
+        this.idContatoLead = idContatoLead;
+        this.emailLead = emailLead;
+        this.celularLead = celularLead;
+        this.lead = lead;
     }
 
-    public String getEmail() {
-        return email;
+    public Integer getIdContatoLead() {
+        return idContatoLead;
     }
 
-    public String getCelular() {
-        return celular;
+    public void setIdContatoLead(Integer idContatoLead) {
+        this.idContatoLead = idContatoLead;
     }
 
-    public LocalDateTime getDataHoraCriacao() {
-        return dataHoraCriacao;
+    public String getEmailLead() {
+        return emailLead;
     }
 
-    public LocalDateTime getDataHoraAlteracao() {
-        return dataHoraAlteracao;
+    public void setEmailLead(String emailLead) {
+        this.emailLead = emailLead;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getCelularLead() {
+        return celularLead;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCelularLead(String celularLead) {
+        this.celularLead = celularLead;
     }
 
-    public void setCelular(String celular) {
-        this.celular = celular;
+    public Lead getLead() {
+        return lead;
     }
 
-    public void setDataHoraCriacao(LocalDateTime dataHoraCriacao) {
-        this.dataHoraCriacao = dataHoraCriacao;
-    }
-
-    public void setDataHoraAlteracao(LocalDateTime dataHoraAlteracao) {
-        this.dataHoraAlteracao = dataHoraAlteracao;
+    public void setLead(Lead lead) {
+        this.lead = lead;
     }
 }

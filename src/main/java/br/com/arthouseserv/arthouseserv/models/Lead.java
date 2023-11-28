@@ -7,62 +7,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "leads")
-public class Lead {
+@Table(name = "cliente_lead")
+public class Lead extends DefaultCriacao{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(length=10)
-    private Long id;
+    @Column(name = "ID_CLIENTE_LEAD")
+    private Integer idLead;
 
-    @Column(length=150)
-    private String nome;
+    @Column(name="NOME_CLIENTE_LEAD")
+    private String nomeLead;
 
-    @Column(nullable = false)
-    private LocalDateTime dataHoraCriacao;
-    private LocalDateTime dataHoraAlteracao;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @Column(insertable=false, updatable=false)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lead",orphanRemoval = true)
     private List<Contato> contatos = new ArrayList<>();
 
+    public Lead(Integer idLead, String nomeLead, List<Contato> contatos) {
+        this.idLead = idLead;
+        this.nomeLead = nomeLead;
+        this.contatos = contatos;
+    }
+
     public Lead() {
-        this.dataHoraCriacao = LocalDateTime.now();
     }
 
-    public Long getId() {
-        return id;
+    public Integer getIdLead() {
+        return idLead;
     }
 
-    public String getNome() {
-        return nome;
+    public void setIdLead(Integer idLead) {
+        this.idLead = idLead;
     }
 
-    public LocalDateTime getDataHoraCriacao() {
-        return dataHoraCriacao;
+    public String getNomeLead() {
+        return nomeLead;
     }
 
-    public LocalDateTime getDataHoraAlteracao() {
-        return dataHoraAlteracao;
+    public void setNomeLead(String nomeLead) {
+        this.nomeLead = nomeLead;
     }
 
     public List<Contato> getContatos() {
         return contatos;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setDataHoraCriacao(LocalDateTime dataHoraCriacao) {
-        this.dataHoraCriacao = dataHoraCriacao;
-    }
-
-    public void setDataHoraAlteracao(LocalDateTime dataHoraAlteracao) {
-        this.dataHoraAlteracao = dataHoraAlteracao;
     }
 
     public void setContatos(List<Contato> contatos) {

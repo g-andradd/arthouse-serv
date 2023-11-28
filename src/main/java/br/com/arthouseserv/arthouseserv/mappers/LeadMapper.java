@@ -30,10 +30,10 @@ public class LeadMapper {
 
     public LeadDTO toDTO(Lead lead) {
         return new LeadDTO(
-                lead.getId(),
-                lead.getNome(),
-                lead.getDataHoraCriacao(),
-                lead.getDataHoraAlteracao(),
+                lead.getIdLead(),
+                lead.getNomeLead(),
+                lead.getDataCriacao(),
+                lead.getDataAlteracao(),
                 lead.getContatos().stream()
                         .map(contatoMapper::toDTO)
                         .collect(Collectors.toList())
@@ -51,10 +51,10 @@ public class LeadMapper {
     }
 
     public Lead toUpdatedEntity(Lead lead, LeadDTO leadDTO) {
-        lead.setId(leadDTO.id());
-        lead.setNome(leadDTO.nome());
-        lead.setDataHoraCriacao(leadDTO.dataHoraCriacao());
-        lead.setDataHoraAlteracao(LocalDateTime.now());
+        lead.setIdLead(leadDTO.id());
+        lead.setNomeLead(leadDTO.nome());
+        lead.setDataCriacao(leadDTO.dataHoraCriacao());
+        lead.setDataAlteracao(LocalDateTime.now());
         lead.setContatos(mapContatosDTOToEntities(leadDTO.contatos()));
 
         return lead;
