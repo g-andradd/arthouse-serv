@@ -65,7 +65,7 @@ public class ProdutoService {
 
 
     public Produto buscarProduto(Integer idProduto) {
-        return produtoRepository.findById(idProduto).orElseThrow(() -> new ProdutosExceptions("Produto não foi encontrado !!"));
+        return produtoRepository.findById(idProduto).orElseThrow(() -> new ProdutosExceptions("Produto não foi encontrado !!" ));
     }
 
 
@@ -75,8 +75,10 @@ public class ProdutoService {
 
     public Page<ProdutosDTO> buscarProdutosPagebleFiltro(FiltroProdutoDTO filtroProdutoDTO, Integer pages, Integer size) {
         Pageable page = PageRequest.of(pages, size);
-        Long total = produtoRepository.buscarTotalProdutos(filtroProdutoDTO);
-        return produtoRepository.getProdutosFiltro(filtroProdutoDTO, page, total);
+        var cores = filtroProdutoDTO.cores().isEmpty() ? null : filtroProdutoDTO.cores();
+        var caracteristicas = filtroProdutoDTO.caracteristicas().isEmpty() ? null : filtroProdutoDTO.caracteristicas();
+        return produtoRepository.getProdutosFiltro(cores, caracteristicas, page);
+
 
     }
 }
