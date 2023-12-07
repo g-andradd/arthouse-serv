@@ -52,7 +52,7 @@ public class ProdutoController {
     }
 
 
-    @GetMapping("/filtro")
+    @PostMapping("/filtro")
     public ResponseEntity<?> filtroProdutos(@RequestBody FiltroProdutoDTO filtroProdutoDTO,
                                             @PathParam("page") Integer page,
                                             @PathParam("size") Integer size) {
