@@ -17,18 +17,16 @@ public class Contato extends  DefaultCriacao{
     @Column(name = "CELULAR_CLIENTE_LEAD")
     private String celularLead;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_CLIENTE_LEAD")
-    private Lead lead;
+
 
     public Contato () {
     }
 
-    public Contato(Integer idContatoLead, String emailLead, String celularLead, Lead lead) {
+    public Contato(Integer idContatoLead, String emailLead, String celularLead) {
         this.idContatoLead = idContatoLead;
         this.emailLead = emailLead;
         this.celularLead = celularLead;
-        this.lead = lead;
+
     }
 
     public Integer getIdContatoLead() {
@@ -55,11 +53,5 @@ public class Contato extends  DefaultCriacao{
         this.celularLead = celularLead;
     }
 
-    public Lead getLead() {
-        return lead;
-    }
 
-    public void setLead(Lead lead) {
-        this.lead = lead;
-    }
 }

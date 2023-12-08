@@ -13,7 +13,7 @@ public class LeadBuilder {
     private String nome;
     private LocalDateTime dataHoraCriacao;
     private LocalDateTime dataHoraAlteracao;
-    private List<Contato> contatos = new ArrayList<>();
+    private Contato contatos;
 
     public LeadBuilder comId(Integer id) {
         this.id = id;
@@ -34,13 +34,13 @@ public class LeadBuilder {
         return this;
     }
 
-    public LeadBuilder comContatos(List<Contato> contatos) {
+    public LeadBuilder comContatos(Contato contatos) {
         this.contatos = contatos;
         return this;
     }
 
     public LeadBuilder comContato(Contato contato) {
-        this.contatos.add(contato);
+        this.contatos=contato;
         return this;
     }
 
@@ -50,7 +50,7 @@ public class LeadBuilder {
         lead.setNomeLead(this.nome);
         lead.setDataCriacao(this.dataHoraCriacao);
         lead.setDataAlteracao(this.dataHoraAlteracao);
-        lead.setContatos(this.contatos);
+        lead.setContato(this.contatos);
         return lead;
     }
 }

@@ -32,9 +32,7 @@ public class LeadMapper {
                 lead.getNomeLead(),
                 lead.getDataCriacao(),
                 lead.getDataAlteracao(),
-                lead.getContatos().stream()
-                        .map(contatoMapper::toDTO)
-                        .collect(Collectors.toList())
+                contatoMapper.toDTO(lead.getContato())
         );
     }
 
@@ -53,19 +51,16 @@ public class LeadMapper {
         lead.setNomeLead(leadDTO.nome());
         lead.setDataCriacao(leadDTO.dataHoraCriacao());
         lead.setDataAlteracao(LocalDateTime.now());
-        lead.setContatos(mapContatosDTOToEntities(leadDTO.contatos()));
+        lead.setContato(mapContatosDTOToEntities(leadDTO.contatos()));
 
         return lead;
     }
 
-    private List<Contato> mapContatosDTOToEntities(List<ContatoDTO> contatoDTOs) {
-        if (contatoDTOs != null) {
-            return contatoDTOs.stream()
-                    .map(contatoMapper::toEntity)
-                    .collect(Collectors.toList());
-        } else {
-            return Collections.emptyList();
-        }
+    private Contato mapContatosDTOToEntities(ContatoDTO contatoDTOs) {
+
+        return contatoMapper.toEntity(contatoDTOs);
+
+
     }
 
     public Lead descontoFormToEntity(LeadDescontoForm leadDescontoForm) {

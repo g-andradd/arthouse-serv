@@ -18,14 +18,14 @@ public class Lead extends DefaultCriacao{
     private String nomeLead;
 
 
-    @Column(insertable=false, updatable=false)
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lead",orphanRemoval = true)
-    private List<Contato> contatos = new ArrayList<>();
+    @ManyToOne()
+    @JoinColumn(name = "ID_CONTATO_CLIENTE_LEAD")
+    private Contato contato;
 
-    public Lead(Integer idLead, String nomeLead, List<Contato> contatos) {
+    public Lead(Integer idLead, String nomeLead, Contato contato) {
         this.idLead = idLead;
         this.nomeLead = nomeLead;
-        this.contatos = contatos;
+        this.contato = contato;
     }
 
     public Lead() {
@@ -47,11 +47,11 @@ public class Lead extends DefaultCriacao{
         this.nomeLead = nomeLead;
     }
 
-    public List<Contato> getContatos() {
-        return contatos;
+    public Contato getContato() {
+        return contato;
     }
 
-    public void setContatos(List<Contato> contatos) {
-        this.contatos = contatos;
+    public void setContato(Contato contato) {
+        this.contato = contato;
     }
 }
