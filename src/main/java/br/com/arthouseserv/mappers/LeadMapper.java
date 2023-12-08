@@ -1,20 +1,21 @@
 package br.com.arthouseserv.mappers;
 
 import br.com.arthouseserv.dto.ContatoDTO;
+import br.com.arthouseserv.dto.LeadMensagemDTO;
 import br.com.arthouseserv.form.LeadDescontoForm;
+import br.com.arthouseserv.form.LeadMensagemForm;
 import br.com.arthouseserv.models.Contato;
 import br.com.arthouseserv.models.Lead;
 import br.com.arthouseserv.dto.LeadDTO;
+import br.com.arthouseserv.models.LeadMensagem;
 import br.com.arthouseserv.models.builders.ContatoBuilder;
 import br.com.arthouseserv.models.builders.LeadBuilder;
+import br.com.arthouseserv.models.builders.LeadMensagemBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 import java.util.TimeZone;
-import java.util.stream.Collectors;
 
 @Component
 public class LeadMapper {
@@ -33,6 +34,17 @@ public class LeadMapper {
                 lead.getDataCriacao(),
                 lead.getDataAlteracao(),
                 contatoMapper.toDTO(lead.getContato())
+        );
+    }
+
+    public LeadMensagemDTO toLeadMensagemDTO(LeadMensagem leadMensagem) {
+        return new LeadMensagemDTO(
+                leadMensagem.getIdMensagem(),
+                leadMensagem.getAssuntoMensagem(),
+                leadMensagem.getTextoMensagem(),
+                leadMensagem.getDataCriacao(),
+                leadMensagem.getDataAlteracao(),
+                this.toDTO(leadMensagem.getLead())
         );
     }
 
@@ -74,6 +86,28 @@ public class LeadMapper {
         return new LeadBuilder()
                 .comContato(contato)
                 .comDataHoraCriacao(LocalDateTime.now())
+                .build();
+    }
+
+    public LeadMensagem mensagemFormToEntity(LeadMensagemForm leadMensagemForm) {
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT-03:00"));
+        Contato contato = new ContatoBuilder()
+                .comEmail(leadMensagemForm.getEmail())
+                .comCelular(leadMensagemForm.getCelular())
+                .comDataHoraCriacao(LocalDateTime.now())
+                .build();
+
+        Lead lead = new LeadBuilder()
+                .comNome(leadMensagemForm.getNome())
+                .comContato(contato)
+                .comDataHoraCriacao(LocalDateTime.now())
+                .build();
+
+        return new LeadMensagemBuilder()
+                .comAssunto(leadMensagemForm.getAssunto())
+                .comMensagem(leadMensagemForm.getMensagem())
+                .comDataHoraCriacao(LocalDateTime.now())
+                .comLead(lead)
                 .build();
     }
 }
