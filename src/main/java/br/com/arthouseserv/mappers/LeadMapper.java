@@ -75,37 +75,18 @@ public class LeadMapper {
 
     }
 
-    public Lead descontoFormToEntity(LeadDescontoForm leadDescontoForm) {
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT-03:00"));
-        Contato contato = new ContatoBuilder()
-                .comEmail(leadDescontoForm.getEmail())
-                .comCelular(leadDescontoForm.getCelular())
-                .comDataHoraCriacao(LocalDateTime.now())
-                .build();
-
+    public Lead FormToEntity(String nome, Contato contato) {
         return new LeadBuilder()
+                .comNome(nome)
                 .comContato(contato)
                 .comDataHoraCriacao(LocalDateTime.now())
                 .build();
     }
 
-    public LeadMensagem mensagemFormToEntity(LeadMensagemForm leadMensagemForm) {
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT-03:00"));
-        Contato contato = new ContatoBuilder()
-                .comEmail(leadMensagemForm.getEmail())
-                .comCelular(leadMensagemForm.getCelular())
-                .comDataHoraCriacao(LocalDateTime.now())
-                .build();
-
-        Lead lead = new LeadBuilder()
-                .comNome(leadMensagemForm.getNome())
-                .comContato(contato)
-                .comDataHoraCriacao(LocalDateTime.now())
-                .build();
-
+    public LeadMensagem mensagemFormToEntity (String assunto, String mensagem, Lead lead) {
         return new LeadMensagemBuilder()
-                .comAssunto(leadMensagemForm.getAssunto())
-                .comMensagem(leadMensagemForm.getMensagem())
+                .comAssunto(assunto)
+                .comMensagem(mensagem)
                 .comDataHoraCriacao(LocalDateTime.now())
                 .comLead(lead)
                 .build();

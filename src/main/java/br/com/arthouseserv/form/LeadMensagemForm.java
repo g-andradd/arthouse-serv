@@ -1,13 +1,28 @@
 package br.com.arthouseserv.form;
 
 import br.com.arthouseserv.models.Lead;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
 
 public class LeadMensagemForm {
 
+    @NotBlank
     private String nome;
+
+    @NotBlank
     private String assunto;
+
+    @NotBlank
+    @Max(2000)
     private String mensagem;
+
+    @NotBlank
+    @Email
     private String email;
+
+    @NotBlank
+    @Max(11)
     private String celular;
 
     public String getNome() {

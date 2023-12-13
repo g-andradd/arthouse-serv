@@ -41,7 +41,7 @@ public class LeadController {
 
     @PostMapping
     public ResponseEntity<LeadDTO> createLead(@RequestBody LeadDescontoForm leadDescontoForm) {
-        LeadDTO createdLead = leadService.createLead(leadDescontoForm);
+        LeadDTO createdLead = leadService.createLead(null, leadDescontoForm.getEmail(), leadDescontoForm.getCelular());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdLead);
     }
 
