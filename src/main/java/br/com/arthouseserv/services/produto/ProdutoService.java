@@ -1,11 +1,11 @@
 package br.com.arthouseserv.services.produto;
 
-import br.com.arthouseserv.dto.FiltroProdutoDTO;
-import br.com.arthouseserv.dto.ProdutosDTO;
-import br.com.arthouseserv.dto.ResponseProdutoDTO;
+import br.com.arthouseserv.dto.*;
 import br.com.arthouseserv.exception.ProdutosExceptions;
+import br.com.arthouseserv.mappers.CaracteriticasProdutoMapper;
 import br.com.arthouseserv.mappers.ProdutoMapper;
 import br.com.arthouseserv.models.Produto;
+import br.com.arthouseserv.repositories.CaracteristicasProdutoRepository;
 import br.com.arthouseserv.repositories.ProdutoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class ProdutoService {
@@ -26,7 +27,11 @@ public class ProdutoService {
     private final CoresProdutoProdutoService coresProdutoProdutoService;
     private final CoresProdutoService coresProdutoService;
 
-    public ProdutoService(ProdutoRepository produtoRepository, TipoProdutoService tipoProdutoService, ProdutoMapper produtoMapper, CaracteriticasProdutoService caracteriticasProdutoService, CaracteristicaProdutoProdutoService caracteristicaProdutoProdutoService, CoresProdutoProdutoService coresProdutoProdutoService, CoresProdutoService coresProdutoService) {
+    public ProdutoService(ProdutoRepository produtoRepository, TipoProdutoService tipoProdutoService,
+                          ProdutoMapper produtoMapper, CaracteriticasProdutoService caracteriticasProdutoService,
+                          CaracteristicaProdutoProdutoService caracteristicaProdutoProdutoService,
+                          CoresProdutoProdutoService coresProdutoProdutoService,
+                          CoresProdutoService coresProdutoService) {
         this.produtoRepository = produtoRepository;
         this.tipoProdutoService = tipoProdutoService;
         this.produtoMapper = produtoMapper;
@@ -34,6 +39,7 @@ public class ProdutoService {
         this.caracteristicaProdutoProdutoService = caracteristicaProdutoProdutoService;
         this.coresProdutoProdutoService = coresProdutoProdutoService;
         this.coresProdutoService = coresProdutoService;
+
     }
 
     public Produto cadastroContProdutos(MultipartFile multipartFile) throws IOException {
@@ -65,7 +71,7 @@ public class ProdutoService {
 
 
     public Produto buscarProduto(Integer idProduto) {
-        return produtoRepository.findById(idProduto).orElseThrow(() -> new ProdutosExceptions("Produto não foi encontrado !!" ));
+        return produtoRepository.findById(idProduto).orElseThrow(() -> new ProdutosExceptions("Produto não foi encontrado !!"));
     }
 
 
@@ -78,7 +84,21 @@ public class ProdutoService {
         var cores = filtroProdutoDTO.cores().isEmpty() ? null : filtroProdutoDTO.cores();
         var caracteristicas = filtroProdutoDTO.caracteristicas().isEmpty() ? null : filtroProdutoDTO.caracteristicas();
         return produtoRepository.getProdutosFiltro(cores, caracteristicas, page);
+    }
 
+    public List<CaracteristicasDTO> listarCaracteristicas() {
+        return caracteriticasProdutoService.buscarListaCaracteristicas();
+    }
 
+    public List<CoresDTO> listarCores() {
+        return coresProdutoService.buscarListaCores();
+    }
+
+    public void salvarImageCaracteristicas(Integer idCaracteristicas, MultipartFile imagem) throws IOException {
+        caracteriticasProdutoService.saveImageCaracteristicas(idCaracteristicas,imagem);
+    }
+
+    public void salvarImageCores(Integer idCores, MultipartFile imagem) throws IOException {
+        coresProdutoService.saveImageCores(idCores,imagem);
     }
 }

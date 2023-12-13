@@ -24,7 +24,7 @@ public class ProdutoController {
     @PostMapping(value = "/cadastro/image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> cadastroImagePapeisDeParede(@RequestParam("anexo") MultipartFile multipartFile) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(produtoService.cadastroContProdutos(multipartFile));
+            return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.cadastroContProdutos(multipartFile));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -35,14 +35,14 @@ public class ProdutoController {
     public ResponseEntity<?> cadastroPapeisDeParede(@RequestBody ResponseProdutoDTO responseProdutoDTO) {
         try {
             produtoService.cadastroProdutosCompleto(responseProdutoDTO);
-            return ResponseEntity.status(HttpStatus.OK).body("Produto salvo com Sucesso!!");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Produto salvo com Sucesso!!");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
 
-    @GetMapping(value = "/download",produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/download", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<?> downloadProduto(@RequestParam("idProduto") Integer idProduto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.downloadProdutoById(idProduto));
@@ -57,12 +57,51 @@ public class ProdutoController {
                                             @PathParam("page") Integer page,
                                             @PathParam("size") Integer size) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(produtoService.buscarProdutosPagebleFiltro(filtroProdutoDTO,page,size));
+            return ResponseEntity.status(HttpStatus.OK).body(produtoService.buscarProdutosPagebleFiltro(filtroProdutoDTO, page, size));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
 
+    @GetMapping("/listar-caracteristicas")
+    public ResponseEntity<?> listarCaracteriticas() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(produtoService.listarCaracteristicas());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("/listar-cores")
+    public ResponseEntity<?> listarCores() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(produtoService.listarCores());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping("/cadastro/image/caracteristicas/{idCaracteristicas}")
+    public ResponseEntity<?> adicionaImgsCaracteristicas(@RequestParam("imagem") MultipartFile multipartFile,
+                                                         @PathVariable("idCaracteristicas") Integer idCaracteristicas) {
+        try {
+            produtoService.salvarImageCaracteristicas(idCaracteristicas, multipartFile);
+            return ResponseEntity.status(HttpStatus.OK).body("Imagem salva com sucesso");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping("/cadastro/image/cores/{idCores}")
+    public ResponseEntity<?> adicionaImgsCores(@RequestParam("imagem") MultipartFile multipartFile,
+                                               @PathVariable("idCores") Integer idCores) {
+        try {
+            produtoService.salvarImageCores(idCores, multipartFile);
+            return ResponseEntity.status(HttpStatus.OK).body("Imagem salva com sucesso");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
 }

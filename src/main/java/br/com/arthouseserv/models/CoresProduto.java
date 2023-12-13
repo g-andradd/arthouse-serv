@@ -16,11 +16,15 @@ public class CoresProduto {
 
     @Column(name = "DESC_COR_PRODUTO")
     private String descCorProduto;
+    @Column(name = "IMG_CORES_PRODUTO")
+    private byte[] imgCorProduto;
 
-    public CoresProduto(Integer idCorProduto, String nomeCorProduto, String descCorProduto) {
+
+    public CoresProduto(Integer idCorProduto, String nomeCorProduto, String descCorProduto, byte[] imgCorProduto) {
         this.idCorProduto = idCorProduto;
         this.nomeCorProduto = nomeCorProduto;
         this.descCorProduto = descCorProduto;
+        this.imgCorProduto = imgCorProduto;
     }
 
     public CoresProduto() {
@@ -48,5 +52,13 @@ public class CoresProduto {
 
     public void setDescCorProduto(String descCorProduto) {
         this.descCorProduto = descCorProduto;
+    }
+
+    public byte[] getImgCorProduto() {
+        return imgCorProduto;
+    }
+
+    public void setImgCorProduto(byte[] imgCorProduto) {
+        this.imgCorProduto = imgCorProduto;
     }
 }
