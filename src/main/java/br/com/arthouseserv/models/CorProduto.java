@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "cores_produto")
-public class CoresProduto {
+public class CorProduto {
 
 
     @Id
@@ -17,13 +17,13 @@ public class CoresProduto {
     @Column(name = "DESC_COR_PRODUTO")
     private String descCorProduto;
 
-    public CoresProduto(Integer idCorProduto, String nomeCorProduto, String descCorProduto) {
+    public CorProduto(Integer idCorProduto, String nomeCorProduto, String descCorProduto) {
         this.idCorProduto = idCorProduto;
         this.nomeCorProduto = nomeCorProduto;
         this.descCorProduto = descCorProduto;
     }
 
-    public CoresProduto() {
+    public CorProduto() {
     }
 
     public Integer getIdCorProduto() {

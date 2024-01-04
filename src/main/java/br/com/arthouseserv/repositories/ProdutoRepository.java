@@ -16,7 +16,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
     @Query("SELECT new br.com.arthouseserv.dto.ProdutosDTO(p.contProduto,p.idProduto) " +
             "FROM Produto p " +
-            "LEFT JOIN CoresProdutoProduto cpp " +
+            "LEFT JOIN CorProdutoProduto cpp " +
             "ON p.idProduto = cpp.produto.idProduto " +
             "LEFT JOIN cpp.coresProduto cp " +
             "LEFT JOIN CaracteristicaProdutoProduto crcpp " +

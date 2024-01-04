@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "cores_produto_produto")
-public class CoresProdutoProduto {
+public class CorProdutoProduto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,18 +13,18 @@ public class CoresProdutoProduto {
 
     @ManyToOne
     @JoinColumn(name = "ID_COR_PRODUTO")
-    private CoresProduto coresProduto;
+    private CorProduto coresProduto;
 
     @ManyToOne
     @JoinColumn(name = "ID_PRODUTO")
     private Produto produto;
 
-    public CoresProdutoProduto(CoresProduto coresProduto, Produto produto) {
+    public CorProdutoProduto(CorProduto coresProduto, Produto produto) {
         this.coresProduto = coresProduto;
         this.produto = produto;
     }
 
-    public CoresProdutoProduto() {
+    public CorProdutoProduto() {
     }
 
     public Integer getIdCoresProdutoProduto() {
@@ -35,11 +35,11 @@ public class CoresProdutoProduto {
         this.idCoresProdutoProduto = idCoresProdutoProduto;
     }
 
-    public CoresProduto getCoresProduto() {
+    public CorProduto getCoresProduto() {
         return coresProduto;
     }
 
-    public void setCoresProduto(CoresProduto coresProduto) {
+    public void setCoresProduto(CorProduto coresProduto) {
         this.coresProduto = coresProduto;
     }
 

@@ -1,9 +1,9 @@
 package br.com.arthouseserv.repositories;
 
-import br.com.arthouseserv.models.CoresProdutoProduto;
+import br.com.arthouseserv.models.CaracteristicaProduto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CoresProdutoProdutoRepository extends JpaRepository<CoresProdutoProduto,Integer> {
+public interface CaracteristicaProdutoRepository extends JpaRepository<CaracteristicaProduto,Integer> {
 }

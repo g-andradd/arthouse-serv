@@ -1,5 +1,7 @@
 package br.com.arthouseserv.controller;
 
+import br.com.arthouseserv.dto.CaracteristicaProdutoDTO;
+import br.com.arthouseserv.dto.CorProdutoDTO;
 import br.com.arthouseserv.dto.FiltroProdutoDTO;
 import br.com.arthouseserv.dto.ResponseProdutoDTO;
 import br.com.arthouseserv.services.produto.ProdutoService;
@@ -9,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/produto")
@@ -51,6 +55,17 @@ public class ProdutoController {
         }
     }
 
+    @GetMapping("/filtro/cores")
+    public ResponseEntity<List<CorProdutoDTO>> getAllCollors() {
+        List<CorProdutoDTO> coresProduto = produtoService.getAllCollors();
+        return ResponseEntity.ok(coresProduto);
+    }
+
+    @GetMapping("/filtro/caracteristicas")
+    public ResponseEntity<List<CaracteristicaProdutoDTO>> getAllTypes() {
+        List<CaracteristicaProdutoDTO> caracteristicasProduto = produtoService.getAllTypes();
+        return ResponseEntity.ok(caracteristicasProduto);
+    }
 
     @PostMapping("/filtro")
     public ResponseEntity<?> filtroProdutos(@RequestBody FiltroProdutoDTO filtroProdutoDTO,

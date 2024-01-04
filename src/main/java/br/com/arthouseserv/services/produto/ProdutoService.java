@@ -1,8 +1,6 @@
 package br.com.arthouseserv.services.produto;
 
-import br.com.arthouseserv.dto.FiltroProdutoDTO;
-import br.com.arthouseserv.dto.ProdutosDTO;
-import br.com.arthouseserv.dto.ResponseProdutoDTO;
+import br.com.arthouseserv.dto.*;
 import br.com.arthouseserv.exception.ProdutosExceptions;
 import br.com.arthouseserv.mappers.ProdutoMapper;
 import br.com.arthouseserv.models.Produto;
@@ -14,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class ProdutoService {
@@ -21,19 +20,19 @@ public class ProdutoService {
     private final ProdutoRepository produtoRepository;
     private final TipoProdutoService tipoProdutoService;
     private final ProdutoMapper produtoMapper;
-    private final CaracteriticasProdutoService caracteriticasProdutoService;
+    private final CaracteriticaProdutoService caracteriticaProdutoService;
     private final CaracteristicaProdutoProdutoService caracteristicaProdutoProdutoService;
-    private final CoresProdutoProdutoService coresProdutoProdutoService;
-    private final CoresProdutoService coresProdutoService;
+    private final CorProdutoProdutoService corProdutoProdutoService;
+    private final CorProdutoService corProdutoService;
 
-    public ProdutoService(ProdutoRepository produtoRepository, TipoProdutoService tipoProdutoService, ProdutoMapper produtoMapper, CaracteriticasProdutoService caracteriticasProdutoService, CaracteristicaProdutoProdutoService caracteristicaProdutoProdutoService, CoresProdutoProdutoService coresProdutoProdutoService, CoresProdutoService coresProdutoService) {
+    public ProdutoService(ProdutoRepository produtoRepository, TipoProdutoService tipoProdutoService, ProdutoMapper produtoMapper, CaracteriticaProdutoService caracteriticaProdutoService, CaracteristicaProdutoProdutoService caracteristicaProdutoProdutoService, CorProdutoProdutoService corProdutoProdutoService, CorProdutoService corProdutoService) {
         this.produtoRepository = produtoRepository;
         this.tipoProdutoService = tipoProdutoService;
         this.produtoMapper = produtoMapper;
-        this.caracteriticasProdutoService = caracteriticasProdutoService;
+        this.caracteriticaProdutoService = caracteriticaProdutoService;
         this.caracteristicaProdutoProdutoService = caracteristicaProdutoProdutoService;
-        this.coresProdutoProdutoService = coresProdutoProdutoService;
-        this.coresProdutoService = coresProdutoService;
+        this.corProdutoProdutoService = corProdutoProdutoService;
+        this.corProdutoService = corProdutoService;
     }
 
     public Produto cadastroContProdutos(MultipartFile multipartFile) throws IOException {
@@ -47,13 +46,13 @@ public class ProdutoService {
 
 
         responseProdutoDTO.caracteristicasProdutoDTO().forEach(x -> {
-            var caracteristicasProduto = caracteriticasProdutoService.buscarCaracteristicasProduto(x.idCaracteristicasProduto());
+            var caracteristicasProduto = caracteriticaProdutoService.buscarCaracteristicasProduto(x.idCaracteristicasProduto());
             caracteristicaProdutoProdutoService.saveCaracteristicaProdutoProduto(retornoProdutoSalvo, caracteristicasProduto);
         });
 
         responseProdutoDTO.coresProdutoDTO().forEach(x -> {
-            var corProduto = coresProdutoService.buscarCoresProduto(x.idCorProduto());
-            coresProdutoProdutoService.saveCoresProdutoProduto(corProduto, retornoProdutoSalvo);
+            var corProduto = corProdutoService.buscarCoresProduto(x.idCorProduto());
+            corProdutoProdutoService.saveCoresProdutoProduto(corProduto, retornoProdutoSalvo);
         });
 
 
@@ -80,5 +79,13 @@ public class ProdutoService {
         return produtoRepository.getProdutosFiltro(cores, caracteristicas, page);
 
 
+    }
+
+    public List<CorProdutoDTO> getAllCollors() {
+        return corProdutoService.findAll();
+    }
+
+    public List<CaracteristicaProdutoDTO> getAllTypes() {
+        return caracteriticaProdutoService.findAll();
     }
 }

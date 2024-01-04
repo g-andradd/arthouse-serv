@@ -14,12 +14,12 @@ public class CaracteristicaProdutoProduto {
     @ManyToOne
     @JoinColumn(name = "ID_CARACTERISTICAS_PRODUTO")
 
-    private CaracteristicasProduto caracteristicasProduto;
+    private CaracteristicaProduto caracteristicasProduto;
     @ManyToOne
     @JoinColumn(name = "ID_PRODUTO")
     private Produto produto;
 
-    public CaracteristicaProdutoProduto( CaracteristicasProduto caracteristicasProduto, Produto produto) {
+    public CaracteristicaProdutoProduto(CaracteristicaProduto caracteristicasProduto, Produto produto) {
         this.caracteristicasProduto = caracteristicasProduto;
         this.produto = produto;
     }
@@ -35,11 +35,11 @@ public class CaracteristicaProdutoProduto {
         this.idCaracteristicasProdutoProduto = idCaracteristicasProdutoProduto;
     }
 
-    public CaracteristicasProduto getCaracteristicasProduto() {
+    public CaracteristicaProduto getCaracteristicasProduto() {
         return caracteristicasProduto;
     }
 
-    public void setCaracteristicasProduto(CaracteristicasProduto caracteristicasProduto) {
+    public void setCaracteristicasProduto(CaracteristicaProduto caracteristicasProduto) {
         this.caracteristicasProduto = caracteristicasProduto;
     }
 
