@@ -98,12 +98,4 @@ public class ProdutoService {
     public void salvarImageCores(Integer idCores, MultipartFile imagem) throws IOException {
         corProdutoService.saveImageCores(idCores,imagem);
     }
-
-    public List<CorProdutoDTO> getAllCollors() {
-        return corProdutoService.findAll();
-    }
-
-    public List<CaracteristicaProdutoDTO> getAllTypes() {
-        return caracteriticaProdutoService.findAll();
-    }
 }

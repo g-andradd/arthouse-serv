@@ -37,11 +37,4 @@ public class CaracteriticaProdutoService {
         caracteristicas.setImgCaracterisiticasProduto(imagem.getBytes());
         caracteristicaProdutoRepository.save(caracteristicas);
     }
-
-    public List<CaracteristicaProdutoDTO> findAll() {
-        List<CaracteristicaProduto> caracteristicasProduto = caracteristicaProdutoRepository.findAll();
-        return caracteristicasProduto.stream()
-                .map(caracteristicaProdutoMapper::toDTO)
-                .collect(Collectors.toList());
-    }
 }

@@ -38,11 +38,4 @@ public class CorProdutoService {
         cores.setImgCorProduto(imagem.getBytes());
         corProdutoRepository.save(cores);
     }
-
-    public List<CorProdutoDTO> findAll() {
-        List<CorProduto> coresProduto = corProdutoRepository.findAll();
-        return coresProduto.stream()
-                .map(corProdutoMapper::toDTO)
-                .collect(Collectors.toList());
-    }
 }

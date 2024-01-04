@@ -55,18 +55,6 @@ public class ProdutoController {
         }
     }
 
-    @GetMapping("/filtro/cores")
-    public ResponseEntity<List<CorProdutoDTO>> getAllCollors() {
-        List<CorProdutoDTO> coresProduto = produtoService.getAllCollors();
-        return ResponseEntity.ok(coresProduto);
-    }
-
-    @GetMapping("/filtro/caracteristicas")
-    public ResponseEntity<List<CaracteristicaProdutoDTO>> getAllTypes() {
-        List<CaracteristicaProdutoDTO> caracteristicasProduto = produtoService.getAllTypes();
-        return ResponseEntity.ok(caracteristicasProduto);
-    }
-
     @PostMapping("/filtro")
     public ResponseEntity<?> filtroProdutos(@RequestBody FiltroProdutoDTO filtroProdutoDTO,
                                             @PathParam("page") Integer page,
@@ -79,7 +67,7 @@ public class ProdutoController {
     }
 
 
-    @GetMapping("/listar-caracteristicas")
+    @GetMapping("/filtro/cores")
     public ResponseEntity<?> listarCaracteriticas() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.listarCaracteristicas());
@@ -88,7 +76,7 @@ public class ProdutoController {
         }
     }
 
-    @GetMapping("/listar-cores")
+    @GetMapping("/filtro/caracteristicas")
     public ResponseEntity<?> listarCores() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.listarCores());
