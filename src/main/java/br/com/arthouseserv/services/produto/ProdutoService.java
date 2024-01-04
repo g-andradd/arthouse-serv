@@ -2,8 +2,10 @@ package br.com.arthouseserv.services.produto;
 
 import br.com.arthouseserv.dto.*;
 import br.com.arthouseserv.exception.ProdutosExceptions;
+import br.com.arthouseserv.mappers.CaracteriticasProdutoMapper;
 import br.com.arthouseserv.mappers.ProdutoMapper;
 import br.com.arthouseserv.models.Produto;
+import br.com.arthouseserv.repositories.CaracteristicasProdutoRepository;
 import br.com.arthouseserv.repositories.ProdutoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +27,11 @@ public class ProdutoService {
     private final CorProdutoProdutoService corProdutoProdutoService;
     private final CorProdutoService corProdutoService;
 
-    public ProdutoService(ProdutoRepository produtoRepository, TipoProdutoService tipoProdutoService, ProdutoMapper produtoMapper, CaracteriticaProdutoService caracteriticaProdutoService, CaracteristicaProdutoProdutoService caracteristicaProdutoProdutoService, CorProdutoProdutoService corProdutoProdutoService, CorProdutoService corProdutoService) {
+    public ProdutoService(ProdutoRepository produtoRepository, TipoProdutoService tipoProdutoService,
+                          ProdutoMapper produtoMapper, CaracteriticaProdutoService caracteriticaProdutoService,
+                          CaracteristicaProdutoProdutoService caracteristicaProdutoProdutoService,
+                          CorProdutoProdutoService corProdutoProdutoService,
+                          CorProdutoService corProdutoService) {
         this.produtoRepository = produtoRepository;
         this.tipoProdutoService = tipoProdutoService;
         this.produtoMapper = produtoMapper;
@@ -64,7 +70,7 @@ public class ProdutoService {
 
 
     public Produto buscarProduto(Integer idProduto) {
-        return produtoRepository.findById(idProduto).orElseThrow(() -> new ProdutosExceptions("Produto não foi encontrado !!" ));
+        return produtoRepository.findById(idProduto).orElseThrow(() -> new ProdutosExceptions("Produto não foi encontrado !!"));
     }
 
 
@@ -77,8 +83,22 @@ public class ProdutoService {
         var cores = filtroProdutoDTO.cores().isEmpty() ? null : filtroProdutoDTO.cores();
         var caracteristicas = filtroProdutoDTO.caracteristicas().isEmpty() ? null : filtroProdutoDTO.caracteristicas();
         return produtoRepository.getProdutosFiltro(cores, caracteristicas, page);
+    }
 
+    public List<CaracteristicasDTO> listarCaracteristicas() {
+        return caracteriticasProdutoService.buscarListaCaracteristicas();
+    }
 
+    public List<CoresDTO> listarCores() {
+        return coresProdutoService.buscarListaCores();
+    }
+
+    public void salvarImageCaracteristicas(Integer idCaracteristicas, MultipartFile imagem) throws IOException {
+        caracteriticasProdutoService.saveImageCaracteristicas(idCaracteristicas,imagem);
+    }
+
+    public void salvarImageCores(Integer idCores, MultipartFile imagem) throws IOException {
+        coresProdutoService.saveImageCores(idCores,imagem);
     }
 
     public List<CorProdutoDTO> getAllCollors() {

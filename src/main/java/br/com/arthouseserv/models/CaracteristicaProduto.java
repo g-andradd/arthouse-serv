@@ -13,9 +13,13 @@ public class CaracteristicaProduto {
     @Column(name = "NOME_CARACTERISTICAS_PRODUTO")
     private String nomeCaracterisiticasProduto;
 
-    public CaracteristicaProduto(Integer idCaracteristicasProduto, String nomeCaracterisiticasProduto) {
+    @Column(name = "IMG_CARACTERISTICAS_PRODUTO")
+    private byte[] imgCaracterisiticasProduto;
+
+    public CaracteristicaProduto(Integer idCaracteristicasProduto, String nomeCaracterisiticasProduto, byte[] imgCaracterisiticasProduto) {
         this.idCaracteristicasProduto = idCaracteristicasProduto;
         this.nomeCaracterisiticasProduto = nomeCaracterisiticasProduto;
+        this.imgCaracterisiticasProduto = imgCaracterisiticasProduto;
     }
 
     public CaracteristicaProduto() {
@@ -35,5 +39,13 @@ public class CaracteristicaProduto {
 
     public void setNomeCaracterisiticasProduto(String nomeCaracterisiticasProduto) {
         this.nomeCaracterisiticasProduto = nomeCaracterisiticasProduto;
+    }
+
+    public byte[] getImgCaracterisiticasProduto() {
+        return imgCaracterisiticasProduto;
+    }
+
+    public void setImgCaracterisiticasProduto(byte[] imgCaracterisiticasProduto) {
+        this.imgCaracterisiticasProduto = imgCaracterisiticasProduto;
     }
 }
