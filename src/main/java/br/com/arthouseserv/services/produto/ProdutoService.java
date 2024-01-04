@@ -2,10 +2,8 @@ package br.com.arthouseserv.services.produto;
 
 import br.com.arthouseserv.dto.*;
 import br.com.arthouseserv.exception.ProdutosExceptions;
-import br.com.arthouseserv.mappers.CaracteriticasProdutoMapper;
 import br.com.arthouseserv.mappers.ProdutoMapper;
 import br.com.arthouseserv.models.Produto;
-import br.com.arthouseserv.repositories.CaracteristicasProdutoRepository;
 import br.com.arthouseserv.repositories.ProdutoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -86,19 +84,19 @@ public class ProdutoService {
     }
 
     public List<CaracteristicasDTO> listarCaracteristicas() {
-        return caracteriticasProdutoService.buscarListaCaracteristicas();
+        return caracteriticaProdutoService.buscarListaCaracteristicas();
     }
 
     public List<CoresDTO> listarCores() {
-        return coresProdutoService.buscarListaCores();
+        return corProdutoService.buscarListaCores();
     }
 
     public void salvarImageCaracteristicas(Integer idCaracteristicas, MultipartFile imagem) throws IOException {
-        caracteriticasProdutoService.saveImageCaracteristicas(idCaracteristicas,imagem);
+        caracteriticaProdutoService.saveImageCaracteristicas(idCaracteristicas,imagem);
     }
 
     public void salvarImageCores(Integer idCores, MultipartFile imagem) throws IOException {
-        coresProdutoService.saveImageCores(idCores,imagem);
+        corProdutoService.saveImageCores(idCores,imagem);
     }
 
     public List<CorProdutoDTO> getAllCollors() {

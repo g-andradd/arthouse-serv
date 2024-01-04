@@ -1,6 +1,5 @@
 package br.com.arthouseserv.repositories;
 
-import br.com.arthouseserv.dto.CaracteristicasDTO;
 import br.com.arthouseserv.dto.CoresDTO;
 import br.com.arthouseserv.models.CorProduto;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,9 +12,9 @@ import java.util.List;
 public interface CorProdutoRepository extends JpaRepository<CorProduto,Integer> {
 
 
-    @Query(" SELECT new br.com.arthouseserv.dto.CoresDTO(cp.idCorProduto," +
+    @Query(" SELECT CoresDTO(cp.idCorProduto," +
             "cp.nomeCorProduto,cp.imgCorProduto) " +
-            "FROM CoresProduto cp")
+            "FROM CorProduto cp")
     List<CoresDTO> buscarCores();
 
 

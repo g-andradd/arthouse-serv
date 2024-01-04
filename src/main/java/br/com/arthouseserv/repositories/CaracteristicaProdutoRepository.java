@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface CaracteristicaProdutoRepository extends JpaRepository<CaracteristicaProduto, Integer> {
 
-    @Query(" SELECT new br.com.arthouseserv.dto.CaracteristicasDTO(cp.idCaracteristicasProduto," +
+    @Query(" SELECT CaracteristicasDTO(cp.idCaracteristicasProduto," +
             "cp.nomeCaracterisiticasProduto,cp.imgCaracterisiticasProduto) " +
-            "FROM CaracteristicasProduto cp")
+            "FROM CaracteristicaProduto cp")
     List<CaracteristicasDTO> buscarCaracteristicas();
 }
