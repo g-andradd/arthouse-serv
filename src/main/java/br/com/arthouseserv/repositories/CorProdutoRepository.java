@@ -12,7 +12,7 @@ import java.util.List;
 public interface CorProdutoRepository extends JpaRepository<CorProduto,Integer> {
 
 
-    @Query(" SELECT CoresDTO(cp.idCorProduto," +
+    @Query(" SELECT new br.com.arthouseserv.dto.CoresDTO(cp.idCorProduto," +
             "cp.nomeCorProduto,cp.imgCorProduto) " +
             "FROM CorProduto cp")
     List<CoresDTO> buscarCores();

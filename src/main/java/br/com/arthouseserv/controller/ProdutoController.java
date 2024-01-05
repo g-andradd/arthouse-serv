@@ -67,7 +67,7 @@ public class ProdutoController {
     }
 
 
-    @GetMapping("/filtro/cores")
+    @GetMapping("/filtro/caracteristicas")
     public ResponseEntity<?> listarCaracteriticas() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.listarCaracteristicas());
@@ -76,7 +76,7 @@ public class ProdutoController {
         }
     }
 
-    @GetMapping("/filtro/caracteristicas")
+    @GetMapping("/filtro/cores")
     public ResponseEntity<?> listarCores() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.listarCores());
