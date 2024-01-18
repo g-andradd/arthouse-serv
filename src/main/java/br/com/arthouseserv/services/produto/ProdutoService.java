@@ -92,10 +92,18 @@ public class ProdutoService {
     }
 
     public void salvarImageCaracteristicas(Integer idCaracteristicas, MultipartFile imagem) throws IOException {
-        caracteriticaProdutoService.saveImageCaracteristicas(idCaracteristicas,imagem);
+        caracteriticaProdutoService.saveImageCaracteristicas(idCaracteristicas, imagem);
     }
 
     public void salvarImageCores(Integer idCores, MultipartFile imagem) throws IOException {
-        corProdutoService.saveImageCores(idCores,imagem);
+        corProdutoService.saveImageCores(idCores, imagem);
+    }
+
+
+    public String calculoQuantidadeRolos(ResponseCalculoQuantidade responseCalculoQuantidade) {
+
+        var soma = responseCalculoQuantidade.getAltura().add(responseCalculoQuantidade.getLargura());
+        return "Será nescessario 2 rolos";
+
     }
 }

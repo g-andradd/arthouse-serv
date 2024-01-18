@@ -1,18 +1,14 @@
 package br.com.arthouseserv.controller;
 
-import br.com.arthouseserv.dto.CaracteristicaProdutoDTO;
-import br.com.arthouseserv.dto.CorProdutoDTO;
 import br.com.arthouseserv.dto.FiltroProdutoDTO;
+import br.com.arthouseserv.dto.ResponseCalculoQuantidade;
 import br.com.arthouseserv.dto.ResponseProdutoDTO;
 import br.com.arthouseserv.services.produto.ProdutoService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/produto")
@@ -57,9 +53,12 @@ public class ProdutoController {
 
     @PostMapping("/filtro")
     public ResponseEntity<?> filtroProdutos(@RequestBody FiltroProdutoDTO filtroProdutoDTO,
-                                            @PathParam("page") Integer page,
-                                            @PathParam("size") Integer size) {
+                                            @RequestPart(value = "page", required = false) Integer page,
+                                            @RequestPart(value = "size", required = false) Integer size) {
         try {
+            page = page == null ? 0 : page;
+            size = size == null ? 10 : size;
+
             return ResponseEntity.status(HttpStatus.OK).body(produtoService.buscarProdutosPagebleFiltro(filtroProdutoDTO, page, size));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -102,6 +101,15 @@ public class ProdutoController {
         try {
             produtoService.salvarImageCores(idCores, multipartFile);
             return ResponseEntity.status(HttpStatus.OK).body("Imagem salva com sucesso");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping("/calculo-quantidade")
+    public ResponseEntity<?> calculaQuantidadedeRolos(@RequestBody ResponseCalculoQuantidade responseCalculoQuantidade) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(produtoService.calculoQuantidadeRolos(responseCalculoQuantidade));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
