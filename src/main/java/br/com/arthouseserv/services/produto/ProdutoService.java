@@ -24,12 +24,13 @@ public class ProdutoService {
     private final CaracteristicaProdutoProdutoService caracteristicaProdutoProdutoService;
     private final CorProdutoProdutoService corProdutoProdutoService;
     private final CorProdutoService corProdutoService;
+    private final StatusProdutoService statusProdutoService;
 
     public ProdutoService(ProdutoRepository produtoRepository, TipoProdutoService tipoProdutoService,
                           ProdutoMapper produtoMapper, CaracteriticaProdutoService caracteriticaProdutoService,
                           CaracteristicaProdutoProdutoService caracteristicaProdutoProdutoService,
                           CorProdutoProdutoService corProdutoProdutoService,
-                          CorProdutoService corProdutoService) {
+                          CorProdutoService corProdutoService, StatusProdutoService statusProdutoService) {
         this.produtoRepository = produtoRepository;
         this.tipoProdutoService = tipoProdutoService;
         this.produtoMapper = produtoMapper;
@@ -37,6 +38,7 @@ public class ProdutoService {
         this.caracteristicaProdutoProdutoService = caracteristicaProdutoProdutoService;
         this.corProdutoProdutoService = corProdutoProdutoService;
         this.corProdutoService = corProdutoService;
+        this.statusProdutoService = statusProdutoService;
     }
 
     public Produto cadastroContProdutos(MultipartFile multipartFile) throws IOException {
@@ -46,8 +48,8 @@ public class ProdutoService {
     public void cadastroProdutosCompleto(ResponseProdutoDTO responseProdutoDTO) {
         var produto = buscarProduto(responseProdutoDTO.idProduto());
         var tipoProduto = tipoProdutoService.getTipoProduto(responseProdutoDTO.tipoProdutoDTO().idTipoProduto());
-        var retornoProdutoSalvo = saveProduto(produtoMapper.produtoDTOToEntityAlteracao(tipoProduto, produto));
-
+        var statusProduto = statusProdutoService.getStatusProdutoById(responseProdutoDTO.statusProduto());
+        var retornoProdutoSalvo = saveProduto(produtoMapper.produtoDTOToEntityAlteracao(tipoProduto, produto, statusProduto));
 
         responseProdutoDTO.caracteristicasProdutoDTO().forEach(x -> {
             var caracteristicasProduto = caracteriticaProdutoService.buscarCaracteristicasProduto(x.idCaracteristicasProduto());
@@ -80,7 +82,16 @@ public class ProdutoService {
         Pageable page = PageRequest.of(pages, size);
         var cores = filtroProdutoDTO.cores().isEmpty() ? null : filtroProdutoDTO.cores();
         var caracteristicas = filtroProdutoDTO.caracteristicas().isEmpty() ? null : filtroProdutoDTO.caracteristicas();
-        return produtoRepository.getProdutosFiltro(cores, caracteristicas, page);
+        var ordenacao = logicaOrdenacao(filtroProdutoDTO);
+        return produtoRepository.getProdutosFiltro(cores, caracteristicas, page, ordenacao.primeiroNumeroOrdenacao(), ordenacao.segundoNumeroOrdenacao());
+    }
+
+    public OrdenacaoDTO logicaOrdenacao(FiltroProdutoDTO filtroProdutoDTO) {
+        if (filtroProdutoDTO.ordenacao() == 0) {
+            return new OrdenacaoDTO(2, 3);
+        } else {
+            return new OrdenacaoDTO(1, 3);
+        }
     }
 
     public List<CaracteristicasDTO> listarCaracteristicas() {

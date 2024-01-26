@@ -20,6 +20,10 @@ public class Produto extends DefaultCriacao{
     @JoinColumn(name = "ID_TIPO_PRODUTO")
     private TipoProduto tipoProduto;
 
+    @ManyToOne
+    @JoinColumn(name = "ID_STATUS_PRODUTO")
+    private StatusProduto statusProduto;
+
 
     public Produto() {
     }
@@ -69,5 +73,13 @@ public class Produto extends DefaultCriacao{
 
     public void setTipoProduto(TipoProduto tipoProduto) {
         this.tipoProduto = tipoProduto;
+    }
+
+    public StatusProduto getStatusProduto() {
+        return statusProduto;
+    }
+
+    public void setStatusProduto(StatusProduto statusProduto) {
+        this.statusProduto = statusProduto;
     }
 }

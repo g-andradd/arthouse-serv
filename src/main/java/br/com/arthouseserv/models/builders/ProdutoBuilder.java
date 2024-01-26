@@ -1,6 +1,7 @@
 package br.com.arthouseserv.models.builders;
 
 import br.com.arthouseserv.models.Produto;
+import br.com.arthouseserv.models.StatusProduto;
 import br.com.arthouseserv.models.TipoProduto;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public class ProdutoBuilder {
     private String descProduto;
     private byte[] contProduto;
     private TipoProduto tipoProduto;
+    private StatusProduto statusProduto;
     private Long idUsuarioCriacao;
     private LocalDateTime dataCriacao;
     private Long idUsuarioAlteracao;
@@ -67,6 +69,11 @@ public class ProdutoBuilder {
 
     }
 
+    public ProdutoBuilder setStatusProduto(StatusProduto statusProduto) {
+        this.statusProduto = statusProduto;
+        return this;
+    }
+
     public Produto build() {
         Produto produto = new Produto();
         produto.setIdProduto(this.idProduto);
@@ -74,6 +81,7 @@ public class ProdutoBuilder {
         produto.setDescProduto(this.descProduto);
         produto.setContProduto(this.contProduto);
         produto.setTipoProduto(this.tipoProduto);
+        produto.setStatusProduto(this.statusProduto);
         produto.setIdUsuarioCriacao(this.idUsuarioCriacao);
         produto.setDataCriacao(this.dataCriacao);
         produto.setIdUsuarioAlteracao(this.idUsuarioAlteracao);

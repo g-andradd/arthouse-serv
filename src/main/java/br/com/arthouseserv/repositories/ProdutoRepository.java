@@ -21,8 +21,14 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
             "LEFT JOIN CaracteristicaProdutoProduto crcpp " +
             "ON crcpp.produto.idProduto = p.idProduto " +
             "LEFT JOIN crcpp.caracteristicasProduto crcp " +
+            "LEFT JOIN p.statusProduto sp " +
             "WHERE(:cores IS NULL OR cp.nomeCorProduto IN :cores) " +
-            "AND(:caracteristicas IS NULL OR crcp.nomeCaracterisiticasProduto IN :caracteristicas)" )
-    Page<ProdutosDTO> getProdutosFiltro(List<String> cores, List<String> caracteristicas, Pageable pageable);
+            "AND(:caracteristicas IS NULL OR crcp.nomeCaracterisiticasProduto IN :caracteristicas) " +
+            "ORDER BY CASE " +
+            "WHEN sp.idStatusProduto NOT IN (:ordenacaoUm,:ordenacaoDois) THEN 1 " +
+            "WHEN sp.idStatusProduto = :ordenacaoUm THEN 2 " +
+            "ELSE 3 " +
+            "END ")
+    Page<ProdutosDTO> getProdutosFiltro(List<String> cores, List<String> caracteristicas, Pageable pageable, Integer ordenacaoUm, Integer ordenacaoDois);
 
 }

@@ -2,6 +2,7 @@ package br.com.arthouseserv.mappers;
 
 
 import br.com.arthouseserv.models.Produto;
+import br.com.arthouseserv.models.StatusProduto;
 import br.com.arthouseserv.models.TipoProduto;
 import br.com.arthouseserv.models.builders.ProdutoBuilder;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ import java.util.TimeZone;
 public class ProdutoMapper {
 
 
-    public Produto produtoDTOToEntityAlteracao(TipoProduto tipoProduto, Produto produto) {
+    public Produto produtoDTOToEntityAlteracao(TipoProduto tipoProduto, Produto produto, StatusProduto statusProduto) {
         TimeZone.setDefault(TimeZone.getTimeZone("GMT-03:00"));
         return new ProdutoBuilder()
                 .setIdProduto(produto.getIdProduto())
@@ -23,6 +24,7 @@ public class ProdutoMapper {
                 .setContProduto(produto.getContProduto())
                 .setNomeProduto(produto.getNomeProduto())
                 .setTipoProduto(tipoProduto)
+                .setStatusProduto(statusProduto)
                 .setDataCriacao(produto.getDataCriacao())
                 .setIdUsuarioCriacao(produto.getIdUsuarioCriacao())
                 .setDataAlteracao(LocalDateTime.now())
