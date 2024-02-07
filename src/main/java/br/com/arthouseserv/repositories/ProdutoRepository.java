@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
-    @Query("SELECT new br.com.arthouseserv.dto.ProdutosDTO(p.contProduto,p.idProduto) " +
+    @Query("SELECT new br.com.arthouseserv.dto.ProdutosDTO(p.contProduto,p.idProduto,sp.nomeStatusProduto) " +
             "FROM Produto p " +
             "LEFT JOIN CorProdutoProduto cpp " +
             "ON p.idProduto = cpp.produto.idProduto " +
