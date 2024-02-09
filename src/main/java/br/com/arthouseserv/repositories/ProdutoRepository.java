@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
-    @Query("SELECT new br.com.arthouseserv.dto.ProdutosDTO(p.contProduto,p.idProduto,sp.nomeStatusProduto) " +
+    @Query("SELECT new br.com.arthouseserv.dto.ProdutosDTO(p.idProduto,p.contProduto,sp.nomeStatusProduto,p.nomeProduto,p.descProduto) " +
             "FROM Produto p " +
             "LEFT JOIN CorProdutoProduto cpp " +
             "ON p.idProduto = cpp.produto.idProduto " +
@@ -30,5 +30,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
             "ELSE 3 " +
             "END ")
     Page<ProdutosDTO> getProdutosFiltro(List<String> cores, List<String> caracteristicas, Pageable pageable, Integer ordenacaoUm, Integer ordenacaoDois);
+
+
 
 }
