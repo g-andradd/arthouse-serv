@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -26,11 +27,13 @@ public class ProdutoService {
     private final CorProdutoService corProdutoService;
     private final StatusProdutoService statusProdutoService;
 
+    private final CalculoRolosService calculoRolosService;
+
     public ProdutoService(ProdutoRepository produtoRepository, TipoProdutoService tipoProdutoService,
                           ProdutoMapper produtoMapper, CaracteriticaProdutoService caracteriticaProdutoService,
                           CaracteristicaProdutoProdutoService caracteristicaProdutoProdutoService,
                           CorProdutoProdutoService corProdutoProdutoService,
-                          CorProdutoService corProdutoService, StatusProdutoService statusProdutoService) {
+                          CorProdutoService corProdutoService, StatusProdutoService statusProdutoService, CalculoRolosService calculoRolosService) {
         this.produtoRepository = produtoRepository;
         this.tipoProdutoService = tipoProdutoService;
         this.produtoMapper = produtoMapper;
@@ -39,6 +42,7 @@ public class ProdutoService {
         this.corProdutoProdutoService = corProdutoProdutoService;
         this.corProdutoService = corProdutoService;
         this.statusProdutoService = statusProdutoService;
+        this.calculoRolosService = calculoRolosService;
     }
 
     public Produto cadastroContProdutos(MultipartFile multipartFile) throws IOException {
@@ -112,9 +116,11 @@ public class ProdutoService {
 
 
     public String calculoQuantidadeRolos(ResponseCalculoQuantidade responseCalculoQuantidade) {
+        var larguraEmMetro = responseCalculoQuantidade.getLargura().divide(BigDecimal.valueOf(100));
+        var alturaEmMetro = responseCalculoQuantidade.getAltura().divide(BigDecimal.valueOf(100));
 
-        var soma = responseCalculoQuantidade.getAltura().add(responseCalculoQuantidade.getLargura());
-        return "Será nescessario 2 rolos";
+        var soma = calculoRolosService.calculoRolos(larguraEmMetro, alturaEmMetro);
+        return "Será nescessario ".concat(String.valueOf(soma)).concat(" rolos");
 
     }
 }
