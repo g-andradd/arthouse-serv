@@ -1,5 +1,6 @@
 package br.com.arthouseserv.repositories;
 
+import br.com.arthouseserv.dto.ProdutoIdDTO;
 import br.com.arthouseserv.dto.ProdutosDTO;
 import br.com.arthouseserv.models.Produto;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,9 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
             "ELSE 3 " +
             "END ")
     Page<ProdutosDTO> getProdutosFiltro(List<String> cores, List<String> caracteristicas, Pageable pageable, Integer ordenacaoUm, Integer ordenacaoDois);
+
+    @Query("SELECT new br.com.arthouseserv.dto.ProdutoIdDTO(p.contProduto,p.nomeProduto,p.descProduto) FROM Produto p WHERE p.idProduto =:idProduto")
+    ProdutoIdDTO buscaProdutoPorId(Integer idProduto);
 
 
 

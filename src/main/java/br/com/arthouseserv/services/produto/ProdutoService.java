@@ -123,4 +123,8 @@ public class ProdutoService {
         return "Será nescessario ".concat(String.valueOf(soma)).concat(" rolos");
 
     }
+
+    public ProdutoIdDTO buscaProdutoPorId(Integer idProduto){
+        return produtoRepository.buscaProdutoPorId(idProduto);
+    }
 }

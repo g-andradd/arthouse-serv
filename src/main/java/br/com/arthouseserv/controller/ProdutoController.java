@@ -115,4 +115,13 @@ public class ProdutoController {
         }
     }
 
+    @GetMapping()
+    public ResponseEntity<?> buscaProdutoPorId(@RequestParam("idProduto") Integer idProduto) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(produtoService.buscaProdutoPorId(idProduto));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 }
