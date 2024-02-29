@@ -32,7 +32,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
             "END ")
     Page<ProdutosDTO> getProdutosFiltro(List<String> cores, List<String> caracteristicas, Pageable pageable, Integer ordenacaoUm, Integer ordenacaoDois);
 
-    @Query("SELECT new br.com.arthouseserv.dto.ProdutoIdDTO(p.contProduto,p.nomeProduto,p.descProduto) FROM Produto p WHERE p.idProduto =:idProduto")
+    @Query("SELECT new br.com.arthouseserv.dto.ProdutoIdDTO(p.idProduto,p.contProduto,p.nomeProduto,p.descProduto) FROM Produto p WHERE p.idProduto =:idProduto")
     ProdutoIdDTO buscaProdutoPorId(Integer idProduto);
 
 

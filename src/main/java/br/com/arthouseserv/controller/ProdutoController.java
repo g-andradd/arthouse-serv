@@ -53,8 +53,8 @@ public class ProdutoController {
 
     @PostMapping("/filtro")
     public ResponseEntity<?> filtroProdutos(@RequestBody FiltroProdutoDTO filtroProdutoDTO,
-                                            @RequestPart(value = "page", required = false) Integer page,
-                                            @RequestPart(value = "size", required = false) Integer size) {
+                                            @RequestParam(value = "page", required = false) Integer page,
+                                            @RequestParam(value = "size", required = false) Integer size) {
         try {
             page = page == null ? 0 : page;
             size = size == null ? 10 : size;

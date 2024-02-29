@@ -1,7 +1,7 @@
 package br.com.arthouseserv.dto;
 
 public class ProdutoIdDTO {
-
+    private Integer id;
     private String nomeProduto;
     private String descProduto;
     private byte[] contProduto;
@@ -10,7 +10,8 @@ public class ProdutoIdDTO {
     public ProdutoIdDTO() {
     }
 
-    public ProdutoIdDTO(byte[] contProduto, String nomeProduto, String descProduto) {
+    public ProdutoIdDTO(Integer id,byte[] contProduto, String nomeProduto, String descProduto) {
+        this.id = id;
         this.contProduto = contProduto;
         this.nomeProduto = nomeProduto;
         this.descProduto = descProduto;
@@ -38,5 +39,13 @@ public class ProdutoIdDTO {
 
     public void setDescProduto(String descProduto) {
         this.descProduto = descProduto;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
