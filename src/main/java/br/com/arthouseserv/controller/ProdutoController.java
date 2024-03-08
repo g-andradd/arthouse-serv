@@ -4,6 +4,7 @@ import br.com.arthouseserv.dto.FiltroProdutoDTO;
 import br.com.arthouseserv.dto.ResponseCalculoQuantidade;
 import br.com.arthouseserv.dto.ResponseProdutoDTO;
 import br.com.arthouseserv.services.produto.ProdutoService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,26 +22,17 @@ public class ProdutoController {
         this.produtoService = produtoService;
     }
 
-    @PostMapping(value = "/cadastro/image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> cadastroImagePapeisDeParede(@RequestParam("anexo") MultipartFile multipartFile) {
+    @PostMapping(value = "/cadastro/image/parametros", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> cadastroImagePapeisDeParede(@RequestPart("anexo") MultipartFile multipartFile,
+                                                         @RequestPart("parametros") String parametros) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.cadastroContProdutos(multipartFile));
+            var params = new ObjectMapper().readValue(parametros, ResponseProdutoDTO.class);
+            return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.cadastroProdutos(multipartFile,params));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
     }
-
-    @PostMapping(value = "/cadastro")
-    public ResponseEntity<?> cadastroPapeisDeParede(@RequestBody ResponseProdutoDTO responseProdutoDTO) {
-        try {
-            produtoService.cadastroProdutosCompleto(responseProdutoDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Produto salvo com Sucesso!!");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-
 
     @GetMapping(value = "/download", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<?> downloadProduto(@RequestParam("idProduto") Integer idProduto) {
@@ -84,7 +76,7 @@ public class ProdutoController {
         }
     }
 
-    @PostMapping("/cadastro/image/caracteristicas/{idCaracteristicas}")
+    @PostMapping(value = "/cadastro/image/caracteristicas/{idCaracteristicas}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> adicionaImgsCaracteristicas(@RequestParam("imagem") MultipartFile multipartFile,
                                                          @PathVariable("idCaracteristicas") Integer idCaracteristicas) {
         try {
@@ -95,7 +87,7 @@ public class ProdutoController {
         }
     }
 
-    @PostMapping("/cadastro/image/cores/{idCores}")
+    @PostMapping(value = "/cadastro/image/cores/{idCores}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> adicionaImgsCores(@RequestParam("imagem") MultipartFile multipartFile,
                                                @PathVariable("idCores") Integer idCores) {
         try {

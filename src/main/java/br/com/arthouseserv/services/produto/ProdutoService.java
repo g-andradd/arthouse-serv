@@ -45,15 +45,11 @@ public class ProdutoService {
         this.calculoRolosService = calculoRolosService;
     }
 
-    public Produto cadastroContProdutos(MultipartFile multipartFile) throws IOException {
-        return saveProduto(produtoMapper.produtoDTOToEntityOnlyCont(multipartFile));
-    }
+    public Produto cadastroProdutos(MultipartFile multipartFile, ResponseProdutoDTO responseProdutoDTO) throws IOException {
 
-    public void cadastroProdutosCompleto(ResponseProdutoDTO responseProdutoDTO) {
-        var produto = buscarProduto(responseProdutoDTO.idProduto());
         var tipoProduto = tipoProdutoService.getTipoProduto(responseProdutoDTO.tipoProdutoDTO().idTipoProduto());
         var statusProduto = statusProdutoService.getStatusProdutoById(responseProdutoDTO.statusProduto());
-        var retornoProdutoSalvo = saveProduto(produtoMapper.produtoDTOToEntityAlteracao(tipoProduto, produto, statusProduto));
+        var retornoProdutoSalvo = saveProduto(produtoMapper.produtoDTOToEntity(multipartFile,tipoProduto,statusProduto, responseProdutoDTO.descricao()));
 
         responseProdutoDTO.caracteristicasProdutoDTO().forEach(x -> {
             var caracteristicasProduto = caracteriticaProdutoService.buscarCaracteristicasProduto(x.idCaracteristicasProduto());
@@ -64,9 +60,9 @@ public class ProdutoService {
             var corProduto = corProdutoService.buscarCoresProduto(x.idCorProduto());
             corProdutoProdutoService.saveCoresProdutoProduto(corProduto, retornoProdutoSalvo);
         });
-
-
+        return retornoProdutoSalvo;
     }
+
 
     public byte[] downloadProdutoById(Integer idProduto) {
         return buscarProduto(idProduto).getContProduto();

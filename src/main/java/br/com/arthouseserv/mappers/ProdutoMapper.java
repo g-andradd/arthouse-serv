@@ -42,5 +42,18 @@ public class ProdutoMapper {
                 .build();
     }
 
+    public Produto produtoDTOToEntity(MultipartFile multipartFile,TipoProduto tipoProduto, StatusProduto statusProduto, String descricaoProduto) throws IOException {
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT-03:00"));
+        return new ProdutoBuilder()
+                .setDescProduto(descricaoProduto)
+                .setContProduto(multipartFile.getBytes())
+                .setNomeProduto(multipartFile.getOriginalFilename())
+                .setTipoProduto(tipoProduto)
+                .setStatusProduto(statusProduto)
+                .setDataCriacao(LocalDateTime.now())
+                .setIdUsuarioCriacao(1L)
+                .build();
+    }
+
 
 }
